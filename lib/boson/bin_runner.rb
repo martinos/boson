@@ -8,12 +8,12 @@ module Boson
   # :ruby_debug, :debug, and :load_path.
   class BinRunner < BareRunner
     GLOBAL_OPTIONS.update(
-      version: {type: :boolean, desc: "Prints the current version"},
-      execute: {type: :string,
-        desc: "Executes given arguments as a one line script"},
-      ruby_debug: {type: :boolean, desc: "Sets $DEBUG", alias: 'D'},
-      debug: {type: :boolean, desc: "Prints debug info for boson"},
-      load_path: {type: :string, desc: "Add to front of $LOAD_PATH", alias: 'I'}
+      version: { type: :boolean, desc: "Prints the current version" },
+      execute: { type: :string,
+                 desc: "Executes given arguments as a one line script" },
+      ruby_debug: { type: :boolean, desc: "Sets $DEBUG", alias: "D" },
+      debug: { type: :boolean, desc: "Prints debug info for boson" },
+      load_path: { type: :string, desc: "Add to front of $LOAD_PATH", alias: "I" },
     )
 
     module API
@@ -52,8 +52,8 @@ module Boson
       def no_method_error_message(err)
         @command = @command.to_s
         if err.backtrace.grep(/`(invoke|full_invoke)'$/).empty? ||
-          !err.message[/undefined method `(\w+\.)?#{command_name(@command)}'/]
-            default_error_message($!)
+           !err.message[/undefined method `(\w+\.)?#{command_name(@command)}'/]
+          default_error_message($!)
         else
           command_not_found?(@command) ?
             "Error: Command '#{@command}' not found" : default_error_message(err)
@@ -85,10 +85,11 @@ module Boson
         @option_parser.print_usage_table
       end
     end
+
     extend API
 
     # Starts, processes and ends a commandline request.
-    def self.start(args=ARGV)
+    def self.start(args = ARGV)
       super
       @command, @options, @args = parse_args(args)
 
@@ -102,8 +103,6 @@ module Boson
       execute_option_or_command(@options, @command, @args)
     rescue NoMethodError
       abort_with no_method_error_message($!)
-    rescue
-      abort_with default_error_message($!)
     end
 
     # Hash of global options passed in from commandline
