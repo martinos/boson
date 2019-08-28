@@ -101,8 +101,6 @@ module Boson
 
       init
       execute_option_or_command(@options, @command, @args)
-    rescue NoMethodError
-      abort_with no_method_error_message($!)
     end
 
     # Hash of global options passed in from commandline
